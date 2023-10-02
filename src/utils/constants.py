@@ -1,0 +1,4 @@
+PROGRAM_NAME="OSS"
+
+
+SIMULATION_LABEL="Simulation"
