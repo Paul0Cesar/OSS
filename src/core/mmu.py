@@ -1,6 +1,7 @@
 from typing import List
 from src.models.page import Page
 from src.models.pcb import PCB
+from src.models.historic_element import HistoricElement
 from src.utils.default_ordered_dict import DefaultOrderedDict
 from src.core.fifo import FIFO
 

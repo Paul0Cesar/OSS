@@ -1,4 +1,5 @@
 from src.models.pcb import PCB
+from src.models.page import Page
 
 class HistoricElement:
     time: int
