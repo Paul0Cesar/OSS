@@ -2,6 +2,7 @@ PROGRAM_NAME="OSS"
 
 
 SIMULATION_LABEL="Simulation"
+PROCESSES_LABEL="Processes"
 
 
 ## Status Labels

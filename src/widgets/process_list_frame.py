@@ -19,9 +19,11 @@ class ProcessListFrame(customtkinter.CTkFrame):
             button.grid(row=index, column=0, padx=5, pady=5)
 
     def update_process(self,itens):
+        if(itens==self.last_process_list):
+            return
+        self.last_process_list=itens
         index = 0
         for item in itens:
-            print(item)
             index = index+1
             self.create_item(item.icon, index)
 

@@ -11,6 +11,8 @@ class Gantt(customtkinter.CTkFrame):
 
         self.fig, self.chart = plt.subplots()
         self.chart.set_ylim(0, 50)
+        self.chart.set_xticks([])
+
 
         self.y_space = 0
         self.x_control = 0
@@ -29,7 +31,6 @@ class Gantt(customtkinter.CTkFrame):
 
 
     def plot_execution_bar(self, process: PCB):
-
         index = self.process_name_list.index(process.name)
         y = self.process_y_list[index]
 

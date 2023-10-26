@@ -9,3 +9,7 @@ class Page:
     self.inMemory = False
     self.lastAcess = 0
     self.lastTimeOnRam = 0
+
+
+    def __str__(self):
+      return self.name 
