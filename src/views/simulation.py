@@ -6,6 +6,7 @@ from src.widgets.cpu_status_frame import CpuStatusFrame
 from src.widgets.memory_frame import MemoryFrame
 from src.widgets.gantt import Gantt
 import tkinter as tk
+import random
 
 from src.models.pcb import PCB
 from src.models.page import Page
@@ -78,7 +79,18 @@ class Simulation():
     def toggle_action_buttons_visibility(self):
         self.button_frame.toggle_action_buttons_visibility(self.is_running)
 
-    def start_new_process(self):
+    def start_new_process(self, process):
+        new_process = PCB(
+            creation_time=random.randint(1, 100),
+            PID=random.randint(1, 100),
+            icon=process.icon,
+            name=process.name,
+            total_time=process.total_time,
+            pages=process.pages)
+        
+        self.process_available.remove(process)
+        self.process_frame.set_available_process(self.process_available)
+        self.kernel.add_PCB(new_process)
         print("NOVO")
 
     def start(self):
@@ -86,7 +98,12 @@ class Simulation():
         self.kernel_thread = None
         self.kernel.clear()
         for i in self.process_list:
-            self.kernel.add_PCB(i)
+            if (i.creation_time != -1):
+                self.kernel.add_PCB(i)
+            else:
+                self.process_available.append(i)
+
+        self.process_frame.set_available_process(self.process_available)
 
         self.memory_disc_frame.setElements(self.kernel.get_all_memory_ram())
 

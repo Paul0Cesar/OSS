@@ -25,13 +25,6 @@ class ProcessListFrame(customtkinter.CTkFrame):
         return button
 
     def update_process(self, itens):
-        # print("HERE!")
-        # if(itens==self.last_process_list):
-        #     print(itens)
-        #     print(self.last_process_list)
-        #     print("SAO IGUAIS")
-        #     return
-
         for view in self.processes:
             view.destroy()
 

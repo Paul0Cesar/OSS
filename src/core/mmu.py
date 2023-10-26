@@ -82,8 +82,7 @@ class MMU:
 
                 pc.readyToExecute = True
                 self.pages_requisition.pop(pc)
-
-            print(len(self.ram_memory))
+                
             self.statistic.ram_use = len(self.ram_memory)/self.max_ram_pages
             historicElement.statistic = copy(self.statistic)
             historic.put(historicElement)

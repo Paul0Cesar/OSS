@@ -10,7 +10,6 @@ class ButtonFrame(customtkinter.CTkFrame):
         self.start_button.grid(row=0, column=0, padx=20, pady=10)
         self.stop_button = customtkinter.CTkButton(
             self, text="Stop", command=stop)
-        # self.stop_button.grid(row=0, column=1, padx=20, pady=10)
 
     def toggle_action_buttons_visibility(self, is_running):
         if is_running:

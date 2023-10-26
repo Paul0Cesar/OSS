@@ -27,8 +27,10 @@ class App(customtkinter.CTk):
                        pages=[Page("02pg01"), Page("02pg02"), Page("02pg03")])
         self.pc3 = PCB(creation_time=3, PID=3, icon="src/resources/icons/visual-studio-code.png", name="vscode", total_time=10,
                        pages=[Page("03pg01"), Page("03pg02"), Page("03pg03")])
+        self.pc4 = PCB(creation_time=-1, PID=4, icon="src/resources/icons/adobe-photoshop.png", name="photoshop", total_time=10,
+                       pages=[Page("04pg01"), Page("04pg02")])
 
-        self.process_list=[self.pc1,self.pc2,self.pc3]
+        self.process_list=[self.pc1,self.pc2,self.pc3,self.pc4]
 
         
 
