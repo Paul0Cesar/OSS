@@ -12,10 +12,11 @@ class Gantt(customtkinter.CTkFrame):
         self.fig, self.chart = plt.subplots()
         self.chart.set_ylim(0, 50)
         self.chart.set_xticks([])
+        self.chart.set_yticklabels([])
 
 
         self.y_space = 0
-        self.x_control = 0
+        self.x_control = 1
         self.process_name_list = []
         self.process_y_list = []
 
@@ -35,7 +36,8 @@ class Gantt(customtkinter.CTkFrame):
         y = self.process_y_list[index]
 
         self.chart.broken_barh(
-            [(self.x_control, self.x_control+1)], (y-3/2, 3), facecolors=('tab:green'))
+            [(self.x_control, 5)], (y-3/2, 3), facecolors=('tab:green'))
+        self.x_control=self.x_control+5
         self.update_view()
 
     def plot_stop_bar(self, process: PCB):
@@ -43,10 +45,14 @@ class Gantt(customtkinter.CTkFrame):
         y = self.process_y_list[index]
 
         self.chart.broken_barh(
-            [(self.x_control, self.x_control+1)], (y-3/2, 3), facecolors=('tab:red'))
+            [(self.x_control,5)], (y-3/2, 3), facecolors=('tab:red'))
+        self.x_control=self.x_control+5
         self.update_view()
 
+
     def add_process(self, process: PCB):
+        if process.name in self.process_name_list:
+            return
         self.y_space = self.y_space+5
         self.process_name_list.append(process.name)
         self.process_y_list.append(self.y_space)

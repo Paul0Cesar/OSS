@@ -3,29 +3,44 @@ from PIL import Image
 
 
 class ProcessListFrame(customtkinter.CTkFrame):
-    def __init__(self, master, orientation="horizontal", **kwargs):
+    def __init__(self, master, start_process=None, orientation="horizontal", **kwargs):
         super().__init__(master, **kwargs)
         self.orientation = orientation
-        self.last_process_list=None
+        self.start_process = start_process
+        self.last_process_list = None
+        self.processes = []
 
-    def create_item(self, icon_url, index):
+    def create_item(self, process, index):
         icon = customtkinter.CTkImage(
-            light_image=Image.open(icon_url), size=(15, 15))
+            light_image=Image.open(process.icon), size=(15, 15))
         button = customtkinter.CTkButton(
             master=self, text="", bg_color="transparent", fg_color="transparent", image=icon, width=20, height=20)
+        if self.start_process:
+            button = customtkinter.CTkButton(
+                master=self, text="", bg_color="transparent", fg_color="transparent", image=icon, width=20, height=20, command=lambda: self.start_process(process))
         if (self.orientation == "horizontal"):
             button.grid(row=0, column=index, padx=5, pady=5)
         else:
             button.grid(row=index, column=0, padx=5, pady=5)
+        return button
 
-    def update_process(self,itens):
-        if(itens==self.last_process_list):
-            return
-        self.last_process_list=itens
+    def update_process(self, itens):
+        # print("HERE!")
+        # if(itens==self.last_process_list):
+        #     print(itens)
+        #     print(self.last_process_list)
+        #     print("SAO IGUAIS")
+        #     return
+
+        for view in self.processes:
+            view.destroy()
+
+        self.last_process_list = itens
         index = 0
         for item in itens:
             index = index+1
-            self.create_item(item.icon, index)
+            bt = self.create_item(item, index)
+            self.processes.append(bt)
 
     def mock_elements(self):
         index = 0

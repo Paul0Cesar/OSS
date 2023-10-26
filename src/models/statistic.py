@@ -4,7 +4,7 @@ class Statistic:
   total_process: int
   pagination_rate: float
   page_fault: float
-  ram_use: float
+  ram_use: float  
   swap_use: float
   page_found: float
 
