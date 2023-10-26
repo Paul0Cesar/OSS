@@ -30,22 +30,37 @@ class Kernel:
 
   def execute(self):
     while(self.execution_list or self.waiting_list):
+      historicElement = HistoricElement(time=self.time)
+
       if(self.execution_list): #Se tiver algum processo a ser executado
         pc = min(self.execution_list, key=lambda x: x.creation_time)
         pc_i = self.execution_list.index(pc)
+        
+        historicElement.process_in_execution = pc
 
         if(self.mmu.verifyAndRequestPages(pc)): #Se pc tem as paginas na memoria
           interations = math.ceil(pc.restant_time/self.interval)
           print("[*] - Interations: ",interations)
+          
           for i in range(0, interations):
-            self.historic.put(HistoricElement(time=self.time, pc=pc))
+            self.historic.put(HistoricElement(time=self.time, process_in_execution=pc))
             self.time += self.interval
             print("[*] - Execute pc: ", pc.name)
+
+          self.finshed_list.append(pc)
           self.execution_list.remove(pc)
+          pc.final_time= self.time
+          historicElement.process_to_finish = pc
+          historicElement.duration = interations * self.interval
+
         else: #Se não tiver coloca em espera
+          historicElement.page_fault = True
+          historicElement.process_to_await = pc
+
           pc.readyToExecute = False
           self.waiting_list.append(pc)
           self.execution_list.remove(pc)
 
-      self.verifyWaitingList()
-      self.mmu.execDMA(self.time)
+      self.historic.append(historicElement)
+      self.verifyWaitingList()    
+      self.mmu.execDMA(self.time, self.historic)

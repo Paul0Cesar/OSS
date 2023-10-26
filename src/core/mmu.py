@@ -8,7 +8,7 @@ class MMU:
   ram_memory: List[Page]
   swap_memory: List[Page]
   pages_memory: List[Page]
-  #pages_requisition: DefaultOrderedDict[PCB, List[Page]]
+  # pages_requisition: DefaultOrderedDict[PCB, List[Page]]
   max_ram_pages : int
 
   def __init__(self):
@@ -39,24 +39,35 @@ class MMU:
   def getPolityc():
     return FIFO()
 
-  def execDMA(self, time: int):
+  def execDMA(self, time: int, historic: List[HistoricElement]):
     if(self.pages_requisition):
       pc = list(self.pages_requisition.keys())[0]
       p = self.pages_requisition[pc][0]
+      historicElement = HistoricElement(time=time)
 
       if(len(self.ram_memory) >= self.max_ram_pages):
         politic = FIFO()
         pg= politic.selectNext(self.ram_memory)
         self.swap_memory.append(pg)
+
+        historicElement.swap_out = pg
+        historicElement.swap_in = p
+        
         self.ram_memory[self.ram_memory.index(pg)] = p
         print(" [-] - ", pg.name, " saiu e ", p.name, " entrou na ram")
       else:
+        historicElement.swap_in = p
+
         self.ram_memory.append(p)
 
       p.lastTimeOnRam = time
       self.pages_requisition[pc].pop(0)
       self.swap_memory.remove(p)
-
+      
       if(not self.pages_requisition[pc]):
+        historicElement.process_to_execution = p
+        
         pc.readyToExecute = True
         self.pages_requisition.pop(pc)
+
+      historic.append(historicElement)
