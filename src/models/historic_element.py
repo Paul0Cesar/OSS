@@ -1,5 +1,6 @@
 from src.models.pcb import PCB
 from src.models.page import Page
+from src.models.statistic import Statistic
 
 class HistoricElement:
     time: int
@@ -11,6 +12,7 @@ class HistoricElement:
     page_fault: bool
     swap_in: Page or None
     swap_out: Page or None
+    statistic: Statistic
 
     def __init__(self, 
                  time: int = 0, 
@@ -21,7 +23,8 @@ class HistoricElement:
                  process_to_finish = None, 
                  page_fault: bool = False, 
                  swap_in = None, 
-                 swap_out = None):
+                 swap_out = None,
+                 statistic: Statistic=Statistic()):
         self.time = time
         self.duration = duration
         self.process_in_execution = process_in_execution
@@ -31,3 +34,4 @@ class HistoricElement:
         self.page_fault = page_fault
         self.swap_in = swap_in
         self.swap_out = swap_out
+        self.statistic = statistic
